@@ -223,7 +223,7 @@ public class BinTreeUtil {
   	return (t == null) ? null : new BinTree(t.element, (t.right != null ? mirrorCopy(t.right) : null), (t.left != null ? mirrorCopy(t.left) : null));
   }
 
-  /*TODO cazzo di casino
+  /*TODO cazzo di casino (mirror in placce)
     modifica l'albero t, senza creare nuovi nodi,
     facendolo diventare il suo speculare
   */
@@ -281,7 +281,7 @@ public class BinTreeUtil {
     }
   }
 
-  /*TODO
+  /*TODO nodi cardine
       scrive sulla console i nodi-cardine dell'albero
       (vedi libro di testo pag. 95):
       chiamiamo cardine un nodo tale che il suo livello nell'albero sia uguale
@@ -290,16 +290,23 @@ public class BinTreeUtil {
       (e quindi un sottoalbero vuoto abbia altezza -1).
    */
   public static void printCentralNodes(BinTree t) {
-    // si deve usare una funzione ausiliaria
+  	System.out.println("cardine: "+cardine(t,0));
   }
-  /*public int cardine(BinTree t,int p){
+  public static int cardine(BinTree t,int p){
   	if(t==null) return -1;
   	else{
-  		int h=max(cardine(t.right,p+1),cardine(t.left,p+1))+1;
-  		if(p==h) return t.element;
+  		int hl = cardine(t.left,p+1);
+  		int hr = cardine(t.right,p+1);
+  		int h = max(hl,hr)+1;
+  		System.out.println("altezza: "+h+" al nodo: "+t.element+" con profondità: "+p);
+  		if(p==h) {
+  			System.out.println("cardine inter: "+t.element);
+  			return t.element;
+  		}
+  		else return h;
   	}
 		
-  }*/
+  }
   /*
     classe ausiliaria per l'esercizio successivo
    */
@@ -312,7 +319,7 @@ public class BinTreeUtil {
     }
   }
 
-  /*TODO
+  /*TODO balanced text book
    * restituisce true se l'albero t Ã¨ "completamente bilanciato"
    * secondo la definizione del libro di testo,
    * altrimenti false: realizzazione come sul libro di testo
@@ -366,16 +373,16 @@ public class BinTreeUtil {
     }
   }
 
-  /*TODO
+  /*TODO sbilanciamento
    * nello stile del libro di testo:
    * restituisce il massimo sbilanciamento
    * dei nodi di un albero
    */
   public static int maxUnbalance(BinTree t) {
-    return heightUnbalance(t).height;
+    return heightUnbalance(t).maxUnbal;
   }
 
-  /*TODO
+  /*
    * nello stile del libro di testo:
    * restituisce una coppia di interi di cui il primo
    * Ã¨ l'altezza di t, il secondo Ã¨ il massimo sbilanciamento
@@ -389,22 +396,33 @@ public class BinTreeUtil {
     	IntPair l = heightUnbalance(t.left);
     	IntPair r = heightUnbalance(t.right);
     	if(l.height==r.height){
-    		return new IntPair(l.height+1,-1);
+    		return new IntPair(l.height+1,abs(l.height-r.height));
     	}
     	else{
-    		int h=max();
-    		return new IntPair(abs(h),abs(l.height-r.height)-1);
+    				return new IntPair(-(max(l.height,r.height)+1),abs(l.height-r.height));
     	}
-    	}
-    
+    }
   }
 
-  /*TODO
-   * restituisce true se l'albero t Ã¨ "1-bilanciato",
+  /*  vedi pag 119 del libro
+   * un nodo è 1-bilanciato se l'altezza dei suoi figli differiscono per al più di un'unità
+   * |h(t.left-h(t.right)|<=1
+   * restituisce true se l'albero t è "1-bilanciato",
    * altrimenti false
    */
   public static boolean is1Balanced(BinTree t) {
-    return true;
+    int x = OneBalanced(t);
+    if(x>=0)return true;
+    else return false;
+  }
+  private static int  OneBalanced(BinTree t){
+  	if(t==null) return -1;
+  	else{
+  	 	int l= OneBalanced(t.left);
+  		int r= OneBalanced(t.right); 
+  		if(l==r || abs(l-r)<=1) return max(l,r)+1;
+  		else return -max(l,r)+1;
+  	}
   }
 }
 

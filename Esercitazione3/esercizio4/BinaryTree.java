@@ -1,6 +1,7 @@
 package esercizio4;
 
 import static java.lang.Math.max;
+import esercizio3.BinTree;
 
 
 public class BinaryTree {
@@ -270,22 +271,28 @@ public class BinaryTree {
      }
   }
 
- /** costruisce e restituisce un nuovo albero speculare di t
+ /** 
+  * costruisce e restituisce un nuovo albero speculare di t
   * 
   * @return speculare di t
   */
   public BinaryTree mirror() {
-    return null;
+  	BinaryTree mirror = new BinaryTree();
+    mirror.root=mirror(root);
+    return mirror;
+  }
+  protected Node mirror(Node nd){
+  	return (nd == null) ? null : new Node(nd.element, (nd.right != null ? mirror(nd.right) : null), (nd.left != null ? mirror(nd.left) : null));
   }
 
   // definire il metodo protected corrispondente,
   // analogamente ai metodi precedenti
 
   public boolean equalTo(BinaryTree t) {
-    return false; // si richiami areEqual
-  }
+    return areEqual(root,t.root); // si richiami areEqual
+  } 
 
-  // si completi il metodo, richiamando areEqual
+  // TODO  si completi il metodo, richiamando areEqual
   public boolean equals(Object ob) {
     if(ob == null) return false;
     if(getClass() != ob.getClass()) return false;
@@ -293,17 +300,18 @@ public class BinaryTree {
   }
 
   protected boolean areEqual(Node node1, Node node2) {
-    return false;
+  	return node1 == node2 || (node1!=null && node2!=null && node1.element==node2.element && areEqual(node1.left,node2.left) && areEqual(node1.right,node2.right));
   }
 
   // crea un nuovo albero binario copia di this
   public BinaryTree copy() {
-    return null;
+  	BinaryTree copy = new BinaryTree();
+    copy.root=mirror(root);
+    return copy;
   }
   
   protected Node copy(Node nd) {
-    // realizzare con una istruzione
-    return null;
+  	return (nd==null)? null : new Node(nd.element,copy(nd.left),copy(nd.right));
   }  
 
   private Node find(int x, Node nd) {
@@ -322,14 +330,22 @@ public class BinaryTree {
    * @return
    */
   public boolean isCompletelyBalanced() {
-    return false;
+  	int x = isCB(root);
+  	if(x>=0) return true;
+  	else return false;
   }
 
   private int isCB(Node nd) {
-    return -1000;
+  	if(nd==null)return -1;
+  	else{
+  	int l = isCB(nd.left);
+  	int r = isCB(nd.right);
+  	if(l==r) return l+1;
+  	else return -(max(l,r)+1);
+  	}
   }
 
-  /** restituisce true se l'albero è 1-bilanciato
+  /**  TODO restituisce true se l'albero è 1-bilanciato
    *  false altrimenti (vedi definizione su libro di testo);
    *  metodo da realizzare a novembre/dicembre
    * @return
@@ -342,7 +358,7 @@ public class BinaryTree {
     return -1000;
   }
 
-  /** numero dei nodi a livello liv */
+  /**  TODO numero dei nodi a livello liv */
   public int numNodesAtLevel(int liv) {
     return numNodesAtLevel(root, liv);
   }
@@ -362,7 +378,7 @@ public class BinaryTree {
     }
   }
 
-/** Esercizio opzionale:
+/** TODO Esercizio opzionale:
    elimina il sottoalbero di radice x;
    se l'elemento x e' presente piu' volte,
    elimina uno solo dei sottoalberi di radice x
@@ -382,32 +398,7 @@ public class BinaryTree {
     return null;
   }
 
-  /* Esercizio 3.13 pag. 99 libro di testo
-   * Restituisce il riferimento al nodo (o a uno dei nodi,
-   * se ne esistono più d'uno) U tale che:
-   * il rapporto fra il numero dei nodi del sottoalbero
-   * di radice U (quindi incluso il nodo stesso) e l'altezza (+1)
-   * dello stesso sia massimo;
-   * in questo esercizio all'altezza si somma il valore 1
-   * altrimenti per le foglie il rapporto sarebbe 1/0 = infinito,
-   * e l'esercizio sarebbe banale: il risultato sarebbe
-   * una qualunque foglia.
-   * 
-   * Per ragioni di debugging,
-   * il metodo può (anzi, per ora deve), prima di restituire il riferimento al nodo,
-   * scrivere sulla console il valore del rapporto per quel nodo.
-   * 
-   * NOTA BENE: Si richiede che l'algoritmo sia lineare nel numero
-   * dei nodi, visitando quindi l'albero una volta sola.
-   * 
-   * Si puo' definire una classe privata ausiliaria,
-   * analogamente a quanto proposto per qualche esercizio precedente
-   * @return
-   * 
-   * Naturalmente per fare "il vero lavoro"
-   * occorre definire un metodo ricorsivo protected o private,
-   * richiamato dal metodo pubblico
-   */  
+ //TODO cardine
   public void printCentralNodes() {
     System.out.print("nodi centrali o nodi-cardine: ");
     central(root,0);
