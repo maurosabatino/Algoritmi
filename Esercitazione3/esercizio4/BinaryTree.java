@@ -309,10 +309,12 @@ public class BinaryTree {
     return areEqual(root,t.root); // si richiami areEqual
   } 
 
-  // TODO  si completi il metodo, richiamando areEqual
+  // si completi il metodo, richiamando areEqual
   public boolean equals(Object ob) {
-    if(ob == null) return false;
-    if(getClass() != ob.getClass()) return false;
+    ;
+  	if(ob == null) return false;
+    if(getClass() != ob.getClass())
+    	return areEqual(root,(Node)ob);
     return false;
   }
 
@@ -384,17 +386,21 @@ public class BinaryTree {
   }
   
 
-  /**  TODO numero dei nodi a livello liv */
+  /**  numero dei nodi a livello liv */
   public int numNodesAtLevel(int liv) {
     return numNodesAtLevel(root, liv);
   }
 
   protected int numNodesAtLevel(Node nd, int lev) {
-  	if(nd!=null || lev!=0){
+  	if(nd!=null){
+  		if(lev!=0){
   		int sumL = numNodesAtLevel(nd.left,lev-1);
   		int sumR = numNodesAtLevel(nd.right,lev-1);
   		return sumL+sumR;
-  	}else return 1;
+  		}
+  		else return 1;
+  	}
+  	else return -1;
   }
 
 
@@ -428,18 +434,27 @@ public class BinaryTree {
     return null;
   }
 
- //TODO cardine
+ //cardine
   public void printCentralNodes() {
     System.out.print("nodi centrali o nodi-cardine: ");
     central(root,0);
     System.out.println();
   }
 
-  private int central(Node nd, int h) {
-    return -1000;
+  private int central(Node nd, int p) {
+  	if(nd==null) return -1;
+  	else{
+  		int hl = central(nd.left,p+1);
+  		int hr = central(nd.right,p+1);
+  		int h = max(hl,hr)+1;
+  		if(p==h) {
+  			System.out.println("cardine : "+nd.element);
+  		}
+  		return h;
+  	}
   }
   
-//TODO  maxElem
+//maxElem
   public int maxElem() {
     if(root == null) throw new IllegalStateException("albero vuoto");
     return maxElem(root);
@@ -450,7 +465,7 @@ public class BinaryTree {
   }
   
   private int maxElem(Node nd) {
-    return -1000;
+    return max3(nd.element,maxElem(nd.left),maxElem(nd.right));
   }
   
   /* TODO Esercizio 3.13 pag. 99 libro di testo

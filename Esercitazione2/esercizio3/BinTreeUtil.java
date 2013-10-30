@@ -280,7 +280,7 @@ public class BinTreeUtil {
     }
   }
 
-  /*TODO nodi cardine
+  /* nodi cardine
       scrive sulla console i nodi-cardine dell'albero
       (vedi libro di testo pag. 95):
       chiamiamo cardine un nodo tale che il suo livello nell'albero sia uguale
@@ -289,7 +289,7 @@ public class BinTreeUtil {
       (e quindi un sottoalbero vuoto abbia altezza -1).
    */
   public static void printCentralNodes(BinTree t) {
-  	System.out.println("cardine: "+cardine(t,0));
+  	cardine(t,0);
   }
   public static int cardine(BinTree t,int p){
   	if(t==null) return -1;
@@ -297,14 +297,11 @@ public class BinTreeUtil {
   		int hl = cardine(t.left,p+1);
   		int hr = cardine(t.right,p+1);
   		int h = max(hl,hr)+1;
-  		System.out.println("altezza: "+h+" al nodo: "+t.element+" con profondità: "+p);
   		if(p==h) {
-  			System.out.println("cardine inter: "+t.element);
-  			return t.element;
+  			System.out.println("cardine : "+t.element);
   		}
-  		else return h;
+  		return h;
   	}
-		
   }
   /*
     classe ausiliaria per l'esercizio successivo
@@ -333,8 +330,12 @@ public class BinTreeUtil {
   	else{
   		BoolIntPair l=isCBHeight(t.left);
   		BoolIntPair r=isCBHeight(t.right);
-  		boolean completamenteBil=l.isCB && r.isCB && (l.height==r.height);
-  		int h=max(l.height,r.height)+1;
+  		int h=(max(l.height,r.height)+1);
+  		boolean completamenteBil;
+  		if(l.isCB && r.isCB && (l.height==r.height))completamenteBil=true;
+  			else completamenteBil= false;
+  		System.out.println("al nodo: "+t.element+" il booleano da come risultato: "+completamenteBil+" e altezza:"+h);
+  		
   		return new BoolIntPair(completamenteBil,h);
   	}
   }
@@ -403,7 +404,7 @@ public class BinTreeUtil {
     }
   }
 
-  /*  vedi pag 119 del libro
+  /* TODO  vedi pag 119 del libro
    * un nodo è 1-bilanciato se l'altezza dei suoi figli differiscono per al più di un'unità
    * |h(t.left-h(t.right)|<=1
    * restituisce true se l'albero t è "1-bilanciato",
