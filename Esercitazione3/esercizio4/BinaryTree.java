@@ -1,5 +1,6 @@
 package esercizio4;
 
+import static java.lang.Math.abs;
 import static java.lang.Math.max;
 import esercizio3.BinTree;
 
@@ -105,7 +106,7 @@ public class BinaryTree {
      }
   }
 
-  /** TODO
+  /** 
    * Scrive gli elementi in preordine sulla consolle
    */
   public void printPreOrder() {
@@ -116,27 +117,38 @@ public class BinaryTree {
 
   protected void printPreOrder(Node node) {
     if(node==null) return;
+    System.out.println(node.element);
     printPreOrder(node.left);
   	printPreOrder(node.right);
-  	System.out.println(node.element);
+  	
     		
   }
 
   public void printInOrder() {
-  
+  	 if(root == null) System.out.println("albero vuoto");
+     printInOrder(root);
+     System.out.println();
   }
 
   protected void printInOrder(Node node) {
-
+  	if(node==null) return;
+    printInOrder(node.left);
+    System.out.println(node.element);
+    printInOrder(node.right);
   }
 
 
   public void printPostOrder() {
-  
+  	if(root == null) System.out.println("albero vuoto");
+    printPostOrder(root);
+    System.out.println();
   }
 
   protected void printPostOrder(Node node) {
-
+  	if(node==null) return;
+    printPostOrder(node.left);
+    printPostOrder(node.right);
+    System.out.println(node.element);
   }
 
   /** altezza dell'albero
@@ -197,13 +209,19 @@ public class BinaryTree {
   protected boolean search(int x, Node nd) {
   	return (nd==null) ? false : (nd.element==x) ? true :  (search(x,nd.left)|| search(x,nd.right));
   }
-//TODO mirrorInPlace
+// mirrorInPlace
   protected void mirrorInPlace(Node node) {
-
+  	if(node!=null){
+  	Node temp=node.left;
+		node.left=node.right;
+		node.right=temp;
+		mirrorInPlace(node.left);
+		mirrorInPlace(node.right);
+  	}
   }
 
   public void mirrorInPlace() {
-    
+    mirrorInPlace(root);
   }
 
   public void increment() {
@@ -227,10 +245,9 @@ public class BinaryTree {
     return trimmedTree;
   }
 
-  /*  TODO realizzare con una sola istruzione */
+  /*  realizzare con una sola istruzione */
   protected Node trimmed(int h, Node nd){
-  	if(nd==null || h==0) return null;
-    else return new Node(nd.element,trimmed(h-1,nd.left),trimmed(h-1,nd.right));
+  	return (nd==null || h==0) ? null: new Node(nd.element,trimmed(h-1,nd.left),trimmed(h-1,nd.right));
   }
 
 
@@ -345,18 +362,27 @@ public class BinaryTree {
   	}
   }
 
-  /**  TODO restituisce true se l'albero è 1-bilanciato
+  /**  restituisce true se l'albero è 1-bilanciato
    *  false altrimenti (vedi definizione su libro di testo);
    *  metodo da realizzare a novembre/dicembre
    * @return
    */  
   public boolean is1Balanced() {
-    return false;
+  	 int x = is1Balanced(root);
+     if(x>=0)return true;
+     else return false;
   }  
 
   private int is1Balanced(Node node) {
-    return -1000;
+  	if(node==null) return -1;
+  	else{
+  	 	int l= is1Balanced(node.left);
+  		int r= is1Balanced(node.right); 
+  		if(l==r || abs(l-r)<=1) return max(l,r)+1;
+  		else return -max(l,r)+1;
+  	}
   }
+  
 
   /**  TODO numero dei nodi a livello liv */
   public int numNodesAtLevel(int liv) {
@@ -364,7 +390,11 @@ public class BinaryTree {
   }
 
   protected int numNodesAtLevel(Node nd, int lev) {
-    return -1000;
+  	if(nd!=null || lev!=0){
+  		int sumL = numNodesAtLevel(nd.left,lev-1);
+  		int sumR = numNodesAtLevel(nd.right,lev-1);
+  		return sumL+sumR;
+  	}else return 1;
   }
 
 
@@ -409,7 +439,7 @@ public class BinaryTree {
     return -1000;
   }
   
-  
+//TODO  maxElem
   public int maxElem() {
     if(root == null) throw new IllegalStateException("albero vuoto");
     return maxElem(root);
@@ -423,7 +453,7 @@ public class BinaryTree {
     return -1000;
   }
   
-  /* Esercizio 3.13 pag. 99 libro di testo
+  /* TODO Esercizio 3.13 pag. 99 libro di testo
    * Restituisce il riferimento al nodo (o a uno dei nodi,
    * se ne esistono più d'uno) v tale che:
    * il rapporto fra il numero dei nodi del sottoalbero
@@ -456,7 +486,7 @@ public class BinaryTree {
   } 
   
   /**
-   * Esercizio 3.14 libro di testo
+   * TODO Esercizio 3.14 libro di testo
    * scrive sulla consolle i valori dei nodi v che soddisfano
    * alla seguente condizione:
    * la somma dei valori degli antenati di v (v incluso)

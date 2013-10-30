@@ -60,9 +60,10 @@ public class BinTreeUtil {
     ai valori che vengono incontrati durante una visita anticipata (preorder).
   */
   public static void preorderPrint(BinTree t) {
+  	System.out.println(t.element);
   	preorderPrint(t.left);
   	preorderPrint(t.right);
-  	System.out.println(t.element);
+  
   }
 
   /*
@@ -81,9 +82,9 @@ public class BinTreeUtil {
   */
   public static void postorderPrint(BinTree t) {
   	if(t!=null){
-  	System.out.println(t.element);
   	postorderPrint(t.left);
   	postorderPrint(t.right);
+  	System.out.println(t.element);
   	}
   }
 
@@ -223,20 +224,18 @@ public class BinTreeUtil {
   	return (t == null) ? null : new BinTree(t.element, (t.right != null ? mirrorCopy(t.right) : null), (t.left != null ? mirrorCopy(t.left) : null));
   }
 
-  /*TODO cazzo di casino (mirror in placce)
+  /* 
     modifica l'albero t, senza creare nuovi nodi,
     facendolo diventare il suo speculare
   */
   public static void mirrorInPlace(BinTree t) {
   	if(t!=null){
-  		//if(t.left==null&&t.right==null)//se sono foglia
-  			
-  		}
-  	
-  			
-  			
-  		
-  	
+  		BinTree temp=t.left;
+  		t.left=t.right;
+  		t.right=temp;
+  		mirrorInPlace(t.left);
+  		mirrorInPlace(t.right);
+  	}
   }
 
   /*
