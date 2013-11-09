@@ -400,7 +400,7 @@ public class BinaryTree {
   		}
   		else return 1;
   	}
-  	else return -1;
+  	else return 0;
   }
 
 
@@ -414,7 +414,7 @@ public class BinaryTree {
     }
   }
 
-/** TODO Esercizio opzionale:
+/**Esercizio opzionale:
    elimina il sottoalbero di radice x;
    se l'elemento x e' presente piu' volte,
    elimina uno solo dei sottoalberi di radice x
@@ -431,7 +431,16 @@ public class BinaryTree {
   }
 
   protected BoolNode removeSubtree(int x, Node nd) {
-    return null;
+  	if(nd!=null){
+  	if(nd.element == x) {
+  		nd.left=nd.right=null;
+  		return new BoolNode(true, root);
+  	}
+  	BoolNode ris = removeSubtree(x, nd.left);
+  	if(ris.found==false) ris = removeSubtree(x, nd.right);
+  	return ris;
+  	}
+  	return new BoolNode(false, root);
   }
 
  //cardine
@@ -465,7 +474,7 @@ public class BinaryTree {
   }
   
   private int maxElem(Node nd) {
-    return max3(nd.element,maxElem(nd.left),maxElem(nd.right));
+    return nd==null? Integer.MIN_VALUE: max3(nd.element,maxElem(nd.left),maxElem(nd.right));
   }
   
   /* TODO Esercizio 3.13 pag. 99 libro di testo

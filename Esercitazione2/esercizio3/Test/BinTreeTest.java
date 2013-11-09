@@ -15,7 +15,7 @@ public class BinTreeTest {
 		//BinTreeUtil.postorderPrint(bt);
 		//BinTreeUtil.mirrorInPlace(bt);
 		//System.out.println(BinTreeUtil.maxUnbalance(bt));
-		System.out.println(BinTreeUtil.is1Balanced(bt));
+		System.out.println(BinTreeUtil.maxUnbalance(bt));
 		//BinTree.draw(BinTreeUtil.find(30, bt), "copia");
 		
 	}

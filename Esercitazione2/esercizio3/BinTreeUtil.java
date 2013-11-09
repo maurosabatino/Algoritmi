@@ -373,7 +373,7 @@ public class BinTreeUtil {
     }
   }
 
-  /*TODO sbilanciamento
+  /*sbilanciamento
    * nello stile del libro di testo:
    * restituisce il massimo sbilanciamento
    * dei nodi di un albero
