@@ -7,7 +7,7 @@ import static java.lang.System.*;
 public class TestCsv {
 	private static PrintWriter out;
 	private static Random generatore = new Random();
-  static final int N = 1001, STEP = 50;
+  static final int N = 10001, STEP = 50;
   static int[] array = new int[N];
 	
   static SortingAlgorithm isort = new InsertionSort(); 
@@ -21,17 +21,20 @@ public class TestCsv {
 	  FileWriter outFile = new FileWriter(test, false);
 	  out = new PrintWriter(outFile);
 	  out.println("arraySize;tInsSort;tSelSort;tMergeSort;tQuickSort");
+	  System.out.println("arraySize | tInsSort | tSelSort | tMergeSort | tQuickSort");
 	  for(int n = STEP; n < N; n += STEP) {
-	  	out.println(""+n+";"+time(isort,n)+";"+time(ssort,n)+";"+time(msort,n)+"");
+	  	fillRandomNatArray(array, n, 9*n/10);
+	  	out.println(""+n+";"+time(isort,array)+";"+time(ssort,array)+";"+time(msort,array)+";"+time(qsort,array));
+	  	System.out.println(""+n+"| "+time(isort,array)+"| "+time(ssort,array)+"| "+time(msort,array)+"");
 	  }
 	  out.close();
 	}
-	public static double time(SortingAlgorithm sorter,int n){
+	public static double time(SortingAlgorithm sorter,int[]array){
 		long  t0,t1;
 		double diff;
-		fillRandomNatArray(array, n, 9*n/10);
+		int[] a = array; 
 		t0 = nanoTime();
-		sorter.sort(array);
+		sorter.sort(a);
 		t1 = nanoTime();
 		diff = (t1-t0)/1000000.0;
 		return diff;
