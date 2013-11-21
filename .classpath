@@ -5,5 +5,7 @@
 	<classpathentry kind="src" path="Esercitazione1"/>
 	<classpathentry kind="src" path="Esercitazione3"/>
 	<classpathentry kind="src" path="Esercitazione4"/>
+	<classpathentry kind="src" path="Esercitazione5"/>
+	<classpathentry kind="src" path="Esercitazione6"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

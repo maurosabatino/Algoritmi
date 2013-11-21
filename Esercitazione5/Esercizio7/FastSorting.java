@@ -103,11 +103,11 @@ public class FastSorting {
 		QuickSortMidToExamine(a,0,n-1);
 	}
 	private static void QuickSortMidToExamine(int[]a,int inf, int sup){
-		int p,i,j;
-		if(sup>inf){
-			p=a[inf];
-			i=inf+1;
-			j=sup;
+		if(sup<=inf) return;
+		int p,i,j;	
+		p=a[inf];
+		i=inf+1;
+		j=sup;
 		while(i<=j){
 			if(a[i]<p){
 				i++;
@@ -120,7 +120,7 @@ public class FastSorting {
 		swap(a,inf,j);
 		QuickSortMidToExamine(a,inf,j-1);
 		QuickSortMidToExamine(a,j+1,sup);
-		}
+		
 	}
 
 	
