@@ -59,8 +59,9 @@ public class HeapPriorityQueue implements PriorityQueueString {
 	public void insert(String element, double priority) {
 		if(indiceUltimo==heap.length-1) throw new IllegalArgumentException();
 		if(position.get(element)==null){	
-			heap[++indiceUltimo] = new ElemConPrior(element,priority);
-			moveUp(indiceUltimo);
+			heap[indiceUltimo] = new ElemConPrior(element,priority);
+			indiceUltimo++;
+			moveUp(indiceUltimo-1);
 		}
 	}
 
