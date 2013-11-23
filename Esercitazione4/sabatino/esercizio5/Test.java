@@ -1,5 +1,4 @@
 package sabatino.esercizio5;
-import sabatino.esercizio5.RandomArrays.*;
 
 public class Test {
 	static RandomArrays arrays = new RandomArrays();

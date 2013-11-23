@@ -48,7 +48,8 @@ public class BinaryTreeGUI extends JFrame {
 
     resetButton.addActionListener(
       new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
+        @Override
+				public void actionPerformed(ActionEvent e) {
           tree = new BinaryTree();
           repaint();
         }
@@ -57,7 +58,8 @@ public class BinaryTreeGUI extends JFrame {
 
     loadButton.addActionListener(
       new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
+        @Override
+				public void actionPerformed(ActionEvent e) {
           JFileChooser chooser = new JFileChooser(".");
           FileNameExtensionFilter filter = new FileNameExtensionFilter("text file","txt");
           chooser.setFileFilter(filter);
@@ -74,7 +76,8 @@ public class BinaryTreeGUI extends JFrame {
 
     insButton.addActionListener(
       new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
+        @Override
+				public void actionPerformed(ActionEvent e) {
           try {
             int x = Integer.parseInt(text.getText());
             String s = text2.getText();
@@ -93,7 +96,8 @@ public class BinaryTreeGUI extends JFrame {
 
     elimButton.addActionListener(
       new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
+        @Override
+				public void actionPerformed(ActionEvent e) {
           try {
             int x = Integer.parseInt(elimField.getText());
             tree.removeSubtree(x);
@@ -108,7 +112,8 @@ public class BinaryTreeGUI extends JFrame {
 
     searchButton.addActionListener(
         new ActionListener() {
-          public void actionPerformed(ActionEvent e) {
+          @Override
+					public void actionPerformed(ActionEvent e) {
             try {
               int x = Integer.parseInt(searchField.getText());
               System.out.println(x + (tree.search(x) ? " presente" : " non presente"));
@@ -123,7 +128,8 @@ public class BinaryTreeGUI extends JFrame {
     
     trimButton.addActionListener(
       new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
+        @Override
+				public void actionPerformed(ActionEvent e) {
           try {
             int n = Integer.parseInt(trimField.getText());
             tree.trim(n);
@@ -138,7 +144,8 @@ public class BinaryTreeGUI extends JFrame {
 
     trimmedButton.addActionListener(
       new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
+        @Override
+				public void actionPerformed(ActionEvent e) {
           try {
             int n = Integer.parseInt(trimField.getText());
             BinaryTree bt = tree.trimmed(n);
@@ -153,7 +160,8 @@ public class BinaryTreeGUI extends JFrame {
 
     numNodiLivButton.addActionListener(
       new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
+        @Override
+				public void actionPerformed(ActionEvent e) {
           try {
             int n = Integer.parseInt(trimField.getText());
             System.out.println(tree.numNodesAtLevel(n));
@@ -289,7 +297,8 @@ public class BinaryTreeGUI extends JFrame {
       }
     }
 
-    public void paintComponent(Graphics g) {
+    @Override
+		public void paintComponent(Graphics g) {
       super.paintComponent(g);
       graphics = g;
       TreeDrawing<Integer> td = build(tree.root, 1);
@@ -309,96 +318,111 @@ public class BinaryTreeGUI extends JFrame {
   }
 
   private ActionListener preorderListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       tree.printPreOrder();
     }
   };
 
   private ActionListener inorderListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       tree.printInOrder();
     }
   };
 
   private ActionListener postorderListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       tree.printPostOrder();
     }
   };
 
   private ActionListener heightListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       System.out.println("height = " + tree.height());
     }
   };
 
   private ActionListener sommaListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       System.out.println("sum = " + tree.sum());
     }
   };
 
   private ActionListener sizeListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       System.out.println("size = " + tree.size());
     }
   };
 
   private ActionListener numFoglieListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       System.out.println("numLeaves = " + tree.numberOfLeaves());
     }
   };
 
   private ActionListener cardiniListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       tree.printCentralNodes();
     }
   };
 
   private ActionListener completoListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       System.out.println(tree.isCompletelyBalanced() ? "completamente bilanciato" : "non completamente bilanciato");
     }
   };
 
   private ActionListener balListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       System.out.println(tree.is1Balanced() ? "1-bilanciato" : "non 1-bilanciato");
     }
   };
 
 
   private ActionListener copyListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       BinaryTree bt = tree.copy();
       new BinaryTreeGUI("Copy", bt);
     }
   };
 
   private ActionListener reflectListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       tree.mirrorInPlace();
       repaint();
     }
   };
 
   private ActionListener specularListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       BinaryTree bt = tree.mirror();
       new BinaryTreeGUI("Copia speculare", bt);
     }
   };
 
   private ActionListener incListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       tree.increment();
       repaint();
     }
   };
 
   private ActionListener ugualeAListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       try{
         String input = JOptionPane.showInputDialog(btreeGUIs.get(windowIdx), windowListString,
           "UgualeA", JOptionPane.PLAIN_MESSAGE);
@@ -411,13 +435,15 @@ public class BinaryTreeGUI extends JFrame {
   };
   
   private ActionListener maxListener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {
+    @Override
+		public void actionPerformed(ActionEvent e) {
       System.out.println("max element = " + tree.maxElem());
     }
   };
   
   private ActionListener esercizio313Listener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {     
+    @Override
+		public void actionPerformed(ActionEvent e) {     
       int elem = tree.maxDescendantsHeightRatio().getElement();
       System.out.print("il nodo risultato contiene il valore: ");
       System.out.println(elem);
@@ -425,7 +451,8 @@ public class BinaryTreeGUI extends JFrame {
   }; 
   
   private ActionListener esercizio314Listener = new ActionListener() {
-    public void actionPerformed(ActionEvent e) {     
+    @Override
+		public void actionPerformed(ActionEvent e) {     
       tree.printEquiNodes();
     }
   };   

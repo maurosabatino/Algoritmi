@@ -2,7 +2,6 @@ package sabatino.esercizio4;
 
 import static java.lang.Math.abs;
 import static java.lang.Math.max;
-import sabatino.esercizio3.BinTree;
 
 
 public class BinaryTree {
@@ -310,7 +309,8 @@ public class BinaryTree {
   } 
 
   // si completi il metodo, richiamando areEqual
-  public boolean equals(Object ob) {
+  @Override
+	public boolean equals(Object ob) {
     ;
   	if(ob == null) return false;
     if(getClass() != ob.getClass())

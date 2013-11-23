@@ -109,13 +109,9 @@ public class FastSorting {
 		i=inf+1;
 		j=sup;
 		while(i<=j){
-			if(a[i]<p){
-				i++;
-			}
-			else{
-				swap(a,j,i);
-				j--;
-			}
+			if(a[i]<p)	i++;
+			else 
+				swap(a,i,j--);
 		}
 		swap(a,inf,j);
 		QuickSortMidToExamine(a,inf,j-1);
@@ -132,23 +128,20 @@ public class FastSorting {
 		QuickSortMidToExamine(array,0,n-1);
 	}
 	public static void QuickSortHoare(int[]array,int fst,int lst){
-		if(fst<lst){
+		if(lst<=fst) return;
 			int iPivot = fst+generatore.nextInt(lst-fst+1);
 			int x = array[iPivot];
 			int i=fst;
 			int j=lst;
-				do{
+			do{
 				while(array[i]<x) i++;
 				while(array[j]>x) j--;
 				if(i<=j){
-					swap(array,i,j);
-					i++;
-					j--;
+					swap(array,i++,j--);
 				}
 			}while(i<=j);
 			QuickSortHoare(array,fst,j);
 			QuickSortHoare(array,i,lst);
-		}
 	}
 	
 		

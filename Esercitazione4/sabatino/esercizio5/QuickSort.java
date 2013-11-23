@@ -6,6 +6,7 @@ public class QuickSort implements SortingAlgorithm{
 	
 	Random generatore = new Random();
 		
+	@Override
 	public void sort(int[] a){
 		if (a ==null || a.length==0)
       return;
