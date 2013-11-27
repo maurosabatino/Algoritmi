@@ -1,13 +1,13 @@
-package sabatino.esercizio9;
+package sabatino.esercizio11;
 
 
 
-public class HeapSortTest {
+public class IntrospectiveSortTest {
 	public static void main(String[]args){
 		Cronometro c = new Cronometro();
-		int[] array = RandomArrays.randomIntArray(20000000);
+		int[] array = RandomArrays.randomIntArray(200000);
 		c.start();
-		HeapSort.hSort(array);
+		IntrospectiveSort.introSort(array);
 		c.stop();
 		System.out.println("lunghezza: "+array.length+" tempo: "+c.getElapsedTime()+" ordinato: "+ordinato(array,array.length));
 	}
