@@ -4,7 +4,7 @@ public class Test {
 	
 	public static void main(String[]args){
 		Cronometro c = new Cronometro();
-		int[] array = RandomArrays.randomIntArray(2000000);
+		int[] array = RandomArrays.randomIntArray(20000000);
 		c.start();
 		QuickSortMidToExamine(array);
 		c.stop();
