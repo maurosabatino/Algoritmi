@@ -10,7 +10,10 @@ public class IntrospectiveSort {
 	
 	static void qhs(int[]a,int fst, int lst, int lev){
 		//if(lst-fst< SOGLIA) isortAux(a,fst,lst);
-		if(lev == 0) hsortAux(a,fst,lst);
+		if(lev == 0){
+			System.out.println("uso l'heapsort");
+			hsortAux(a,fst,lst);
+		}
 		else{
 			if(fst>=lst) return;
 			int p = QuickSortHoarePartition(a,fst,lst);
