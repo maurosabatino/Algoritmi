@@ -404,24 +404,25 @@ public class BinTreeUtil {
     }
   }
 
-  /* TODO  vedi pag 119 del libro
+  /* vedi pag 119 del libro
    * un nodo è 1-bilanciato se l'altezza dei suoi figli differiscono per al più di un'unità
    * |h(t.left-h(t.right)|<=1
    * restituisce true se l'albero t è "1-bilanciato",
    * altrimenti false
    */
   public static boolean is1Balanced(BinTree t) {
-    int x = OneBalanced(t);
+  	int x = OneBalanced(t,0);
     if(x>=0)return true;
     else return false;
   }
-  private static int  OneBalanced(BinTree t){
+  private static int  OneBalanced(BinTree t, int height){
   	if(t==null) return -1;
   	else{
-  	 	int l= OneBalanced(t.left);
-  		int r= OneBalanced(t.right); 
-  		if(l==r || abs(l-r)<=1) return max(l,r)+1;
-  		else return -max(l,r)+1;
+  	 	int l= OneBalanced(t.left,height);
+  		int r= OneBalanced(t.right,height);
+  		if(l==-2 || r==-2) return -2;
+  		if(abs(l-r)>1) return -2;
+  		else return (max(l,r)+1);
   	}
   }
 }
