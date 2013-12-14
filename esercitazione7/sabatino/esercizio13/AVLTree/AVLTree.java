@@ -1,10 +1,8 @@
 package sabatino.esercizio13.AVLTree;
 
-
-
 public class AVLTree implements Dictionary{
 	Node root;
-	
+	int numElem;
 	
 	@Override
 	public ObjectWhitKey get(int key) {
@@ -19,7 +17,7 @@ public class AVLTree implements Dictionary{
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
+		if(root==null) return true;
 		return false;
 	}
 
@@ -31,17 +29,15 @@ public class AVLTree implements Dictionary{
 	}
 	public Node put(ObjectWhitKey element,Node node) {
 		if(node==null){
-			System.out.println("sono nella root, key: "+element.key());
 			node = new Node(element);
+			numElem++;
 		}else if(element.key()<node.value.key()){
-			System.out.println("sono a sinistra");
 			node.left=put(element,node.left);
 			if((height(node.left)-height(node.right)) == 2){
 				if(element.key() > node.left.value.key())node.left=S(node.left);
 					node = R(node);
 			}
 		}else if(element.key() > node.value.key()) {
-			System.out.println("sono a destra");
 			node.right=put(element,node.right);
 			if((height(node.right)-height(node.left)) == 2){
 				if(element.key() < node.right.value.key()) node.right=R(node.right);
@@ -61,20 +57,27 @@ public class AVLTree implements Dictionary{
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return numElem;
 	}
 
 	@Override
 	public ObjectWhitKey max() {
-		// TODO Auto-generated method stub
-		return null;
+		return max(root);
+	}
+	public ObjectWhitKey max(Node node) {
+		if(node==null) return null;
+		else if(node.right!=null) return max(node.right);
+		return node.value;
 	}
 
 	@Override
 	public ObjectWhitKey min() {
-		// TODO Auto-generated method stub
-		return null;
+		return min(root);
+	}
+	public ObjectWhitKey min(Node node) {
+		if(node==null) return null;
+		else if(node.left==null) return node.value;
+		else return min(node.left);
 	}
 	
 	
@@ -104,6 +107,19 @@ public class AVLTree implements Dictionary{
 
 	 public static int max (int lhs, int rhs) {
 		 return lhs > rhs ? lhs : rhs;
+	 }
+	 
+	 public void printInOrder() {
+	 	 if(root == null) System.out.println("albero vuoto");
+	    printInOrder(root);
+	    System.out.println("size: "+size()+" max: "+max()+" min: "+min());
+	 }
+
+	 protected void printInOrder(Node node) {
+	 	if(node==null) return;
+	   printInOrder(node.left);
+	   System.out.println(node.value.toString());
+	   printInOrder(node.right);
 	 }
 	 
 
