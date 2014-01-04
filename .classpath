@@ -7,7 +7,8 @@
 	<classpathentry kind="src" path="Esercitazione4"/>
 	<classpathentry kind="src" path="Esercitazione5"/>
 	<classpathentry kind="src" path="Esercitazione6"/>
-	<classpathentry kind="src" path="esercitazione7"/>
+	<classpathentry kind="src" path="Esercitazione7"/>
+	<classpathentry kind="src" path="Esercitazione8"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
