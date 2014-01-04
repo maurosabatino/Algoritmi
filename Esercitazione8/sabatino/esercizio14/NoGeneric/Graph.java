@@ -12,5 +12,5 @@ public interface Graph {
 	boolean hasEdge(int v1,int v2);
 	double getWeight(int source, int dest);
 	ArrayList<Integer> vertices();
-	ArrayList<Integer> neighbors(int vertex);
+	ArrayList<Arco> neighbors(int vertex);
 }

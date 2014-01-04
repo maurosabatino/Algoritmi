@@ -2,36 +2,48 @@ package sabatino.esercizio14;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
-public class DenseGraph<V,E extends Arco<V>> implements Graph<V,E>{
-	Set<V,Set<V>> st;
+
+
+
+public class DenseGraph<V,E> implements Graph<V,E>{
+	
 	ArrayList<V> nodi;	//vertex
-	int nArchi;
-	HashMap<V,E> hash;
+	HashMap<V,ArrayList<E>> archi;
+	int n;
+	int m;
+	
+	
 	DenseGraph(){
 		nodi = new ArrayList<V>();
-		hash = new HashMap<V,E>();
-		nArchi = 0;
+		archi = new HashMap<V,ArrayList<E>>();
+		n = 0;
+		m = 0;
 	}
 	
 	@Override
 	public boolean addVertex(V vertex) {
-		if (!nodi.contains(vertex)) {
-      List<E> lista = new ArrayList<E>();
-      nodi.add(vertex);
-      hash.put(vertex, (E)lista);
-      
-      return true;
-    }
+		if(!nodi.contains(vertex)){
+			nodi.add(vertex);
+			n++;
+			ArrayList<E> neighbors = new ArrayList<E>();
+			archi.put(vertex,(ArrayList<E>) neighbors);
+			return true;
+		}
+		
 		return false;
 	}
 
 	@Override
 	public boolean addEdge(V v1, V v2, E info) {
 		if(nodi.contains(v1)){
-			hash.
+			if(!nodi.contains(v1)) addVertex(v1);
+			if(!nodi.contains(v2)) addVertex(v2);
+			Arco<V,E> a = new Arco<V, E>(info,v1,v2);
+			ArrayList<Arco> neighbors = (ArrayList<Arco>)archi.get(v1);
+			neighbors.add(a);
+			m++;
+			return true;
 		}
 		return false;
 	}
@@ -84,5 +96,14 @@ public class DenseGraph<V,E extends Arco<V>> implements Graph<V,E>{
 		return null;
 	}
 
+	public void printVertex(){
+		for(V i : nodi)
+			System.out.println(i);
+	}
+	public void printNeighbors(int vertex){
+		ArrayList<Arco> neighbors = (ArrayList<Arco>)archi.get(vertex);
+		for(Arco<V,E> a : neighbors)
+			System.out.println("iniziale: "+a.in+" finale: "+a.fin+" info: "+a.info);
+	}
 	
 }

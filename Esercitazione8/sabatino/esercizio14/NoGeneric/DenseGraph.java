@@ -2,20 +2,20 @@ package sabatino.esercizio14.NoGeneric;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
+
 
 
 public class DenseGraph implements Graph{
 	
 	ArrayList<Integer> nodi;	//vertex
-	HashMap archi;
+	HashMap<Integer, ArrayList<Arco>> archi;
 	int n; // numero nodi
 	int m; // numero archi
 	
 
 	DenseGraph(){
 		nodi = new ArrayList<Integer>();
-		archi = new HashMap();
+		archi = new HashMap<Integer, ArrayList<Arco>>();
 		n = 0;
 		m = 0;
 	}
@@ -24,7 +24,7 @@ public class DenseGraph implements Graph{
 		if(!nodi.contains(vertex)){
 			nodi.add(vertex);
 			n++;
-			ArrayList neighbors = new ArrayList();
+			ArrayList<Arco> neighbors = new ArrayList<Arco>();
 			archi.put(vertex,neighbors);
 			return true;
 		}
@@ -36,15 +36,20 @@ public class DenseGraph implements Graph{
 		if(!nodi.contains(v1)) addVertex(v1);
 		if(!nodi.contains(v2)) addVertex(v2);
 		Arco a = new Arco(info,v1,v2);
-		ArrayList neighbors = (ArrayList)archi.get(v1);
+		ArrayList<Arco> neighbors = (ArrayList<Arco>)archi.get(v1);
 		neighbors.add(a);
-		
-		return false;
+		m++;
+		return true;
 	}
 	@Override
 	public boolean addEdge(int v1, int v2, double weight, String info) {
-		// TODO Auto-generated method stub
-		return false;
+		if(!nodi.contains(v1)) addVertex(v1);
+		if(!nodi.contains(v2)) addVertex(v2);
+		Arco a = new Arco(info,v1,v2,weight);
+		ArrayList<Arco> neighbors = (ArrayList<Arco>)archi.get(v1);
+		neighbors.add(a);
+		m++;
+		return true;
 	}
 	@Override
 	public boolean addUndirectedEdge(int v1, int v2, String info) {
@@ -77,15 +82,15 @@ public class DenseGraph implements Graph{
 		
 	}
 	@Override
-	public ArrayList<Integer> neighbors(int vertex) {
-		return (ArrayList)archi.get(vertex);
+	public ArrayList<Arco> neighbors(int vertex) {
+		return (ArrayList<Arco>)archi.get(vertex);
 	}
 	public void printVertex(){
 		for(Integer i : nodi)
 			System.out.println(i);
 	}
 	public void printNeighbors(int vertex){
-		ArrayList<Arco> neighbors = (ArrayList)archi.get(vertex);
+		ArrayList<Arco> neighbors = (ArrayList<Arco>)archi.get(vertex);
 		for(Arco a : neighbors)
 			System.out.println("iniziale: "+a.in+" finale: "+a.fin+" info: "+a.info);
 	}
