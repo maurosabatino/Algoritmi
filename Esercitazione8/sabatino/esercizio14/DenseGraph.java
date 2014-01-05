@@ -1,10 +1,10 @@
 package sabatino.esercizio14;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-
-
 
 public class DenseGraph<V,E> implements Graph<V,E>{
 	
@@ -12,7 +12,6 @@ public class DenseGraph<V,E> implements Graph<V,E>{
 	HashMap<V,ArrayList<E>> archi;
 	int n;
 	int m;
-	
 	
 	DenseGraph(){
 		nodi = new ArrayList<V>();
@@ -50,7 +49,15 @@ public class DenseGraph<V,E> implements Graph<V,E>{
 
 	@Override
 	public boolean addEdge(V v1, V v2, double weight, E info) {
-		// TODO Auto-generated method stub
+		if(nodi.contains(v1)){
+			if(!nodi.contains(v1)) addVertex(v1);
+			if(!nodi.contains(v2)) addVertex(v2);
+			Arco<V,E> a = new Arco<V, E>(info,v1,v2,weight);
+			ArrayList<Arco> neighbors = (ArrayList<Arco>)archi.get(v1);
+			neighbors.add(a);
+			m++;
+			return true;
+		}
 		return false;
 	}
 
@@ -105,5 +112,18 @@ public class DenseGraph<V,E> implements Graph<V,E>{
 		for(Arco<V,E> a : neighbors)
 			System.out.println("iniziale: "+a.in+" finale: "+a.fin+" info: "+a.info);
 	}
-	
+	public void ToDot(String GraphName) throws IOException{
+		String Graph = GraphName+".dot";
+	  FileWriter outFile = new FileWriter(Graph, false);
+	  PrintWriter out = new PrintWriter(outFile);
+	  out.println("digraph "+GraphName+"{");
+	  for(V i : nodi){
+	  	ArrayList<Arco> neighbors = (ArrayList<Arco>)archi.get(i);
+			for(Arco<V,E> a : neighbors){
+				out.println(a.in+" -> "+a.fin+";");
+			}
+	  }
+	  out.println("}");
+	  out.close();
+	}
 }
