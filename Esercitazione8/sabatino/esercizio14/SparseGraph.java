@@ -13,7 +13,7 @@ public class SparseGraph<V,E> implements Graph<V,E>{
 	int n;
 	int m;
 	
-	SparseGraph(){
+	public SparseGraph(){
 		nodi = new ArrayList<V>();
 		archi = new HashMap<V,ArrayList<E>>();
 		n = 0;
@@ -97,7 +97,7 @@ public class SparseGraph<V,E> implements Graph<V,E>{
 
 	@Override
 	public double getWeight(V source, V dest) {
-		return getEdge(source,dest).weight;
+		return getEdge(source,dest).getWeight();
 	}
 
 	@Override
@@ -122,7 +122,7 @@ public class SparseGraph<V,E> implements Graph<V,E>{
 		ArrayList<Arco> neighbors = (ArrayList<Arco>)archi.get(source);
 		Arco find = new Arco(source,dest);
 		for(Arco<V,E> a : neighbors){
-			if(a.equals(find))
+			if((a.fin.equals(find.fin))&&(a.in.equals(find.in)))
 				return a;
 		}
 		return null;

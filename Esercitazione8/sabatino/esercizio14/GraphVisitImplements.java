@@ -11,12 +11,11 @@ public class GraphVisitImplements<V,E> implements GraphVisit<V,E> {
 	Queue<V> F;
 	HashMap<V,Boolean>visit;
 	Stack<V> stack;
-	//ArrayList<V>padri;
+	ArrayList<V>padri;
 	public Graph<V, E> breadthFirst(Graph<V, E> graph, V s, VertexAnalyser<V> va) {///mancano i padri
-		//padri = new ArrayList<V>();
+		padri = new ArrayList<V>();
 		ArrayList<V> vertex = graph.vertices();
 		visit = new HashMap<V,Boolean>();	
-		
 		for(V n : vertex){
 			visit.put(n, false);
 		}
