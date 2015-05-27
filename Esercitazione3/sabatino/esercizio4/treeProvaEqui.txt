@@ -1,0 +1,10 @@
+10
+6 L
+4 LL
+5 R
+-2 RL
+7 RR
+3 RLL
+5 RLLL
+1 RLLR
+4 RLLRL
