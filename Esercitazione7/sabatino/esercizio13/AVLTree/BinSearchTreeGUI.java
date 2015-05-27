@@ -27,6 +27,7 @@ public class BinSearchTreeGUI extends JFrame {
   private JLabel labelChiave = new JLabel("             chiave (num. intero):");
   private JLabel labelNome = new JLabel("  nome:");
   private JLabel labelVuota = new JLabel("             ");
+  
 
 
   public BinSearchTreeGUI(String title) {
@@ -34,7 +35,6 @@ public class BinSearchTreeGUI extends JFrame {
     tree = new AVLTree();
     readFile();
     draw();
-    tree.printInOrder();
 
     insButton.addActionListener(
       new ActionListener() {
@@ -42,8 +42,8 @@ public class BinSearchTreeGUI extends JFrame {
           String nome = text1.getText().trim();
           int num = Integer.parseInt(text2.getText());
           tree.put(new Elem(nome, num));
+          tree.checkBalance();
           repaint();
-          tree.printInOrder();
         }
       }
     );
@@ -86,6 +86,8 @@ public class BinSearchTreeGUI extends JFrame {
     controlPanel.add(text1);
     controlPanel.add(labelVuota);
     controlPanel.add(insButton);
+    JLabel labelBalanced = new JLabel("l'albero è bilanciato: "+tree.checkBalanceBoolean());
+    controlPanel.add(labelBalanced);
     add(BorderLayout.SOUTH, controlPanel);
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setVisible(true);

@@ -24,6 +24,7 @@ public class BinaryTreeGUI extends JFrame {
   private JTextField searchField = new JTextField(5);  
   private JButton trimButton = new JButton("trim");
   private JButton trimmedButton = new JButton("trimmed");
+  private JButton putSize = new JButton("putSize");
   private JButton numNodiLivButton = new JButton("n. nodi al liv.");
   private JTextField trimField = new JTextField(2);
   private JPanel filePanel = new JPanel();
@@ -157,6 +158,21 @@ public class BinaryTreeGUI extends JFrame {
         }
       }
     );
+    putSize.addActionListener(
+        new ActionListener() {
+          @Override
+  				public void actionPerformed(ActionEvent e) {
+            try {
+              
+             tree.putSize();
+              new BinaryTreeGUI("Trimmed tree", tree);
+            }
+            catch(NumberFormatException ex) {
+              System.out.println("livello non intero");
+            }
+          }
+        }
+      );
 
     numNodiLivButton.addActionListener(
       new ActionListener() {
@@ -198,6 +214,7 @@ public class BinaryTreeGUI extends JFrame {
     controlPanel.add(trimmedButton);
     controlPanel.add(new JLabel("al livello: "));
     controlPanel.add(trimField);
+    controlPanel.add(putSize);
     add(BorderLayout.SOUTH, controlPanel);
     filePanel.add(loadButton);
     filePanel.add(resetButton);

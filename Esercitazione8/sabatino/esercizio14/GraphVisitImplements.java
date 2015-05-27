@@ -6,12 +6,25 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
+/**
+ * classe che implementa l'interfaccia GraphVisit con i metodi:
+ * - visita in ampiezza -> breadthFirst 
+ * - visita in profondità -> depthFirst 
+ *  
+ * @author Mauro
+ *
+ * @param <V> tipo generico utilizzato per rappresentare i vertici (vertex) del grafo sparso.
+ * @param <E> tipo generico utilizzato per rappresentare le informazioni degli archi (edges) del grafo sparso.
+ */
 public class GraphVisitImplements<V,E> implements GraphVisit<V,E> {
 	
 	Queue<V> F;
 	HashMap<V,Boolean>visit;
 	Stack<V> stack;
 	ArrayList<V>padri;
+	/**
+	 * visita in ampiezza
+	 */
 	public Graph<V, E> breadthFirst(Graph<V, E> graph, V s, VertexAnalyser<V> va) {///mancano i padri
 		padri = new ArrayList<V>();
 		ArrayList<V> vertex = graph.vertices();
@@ -41,6 +54,9 @@ public class GraphVisitImplements<V,E> implements GraphVisit<V,E> {
 		}
 	}
 
+	/**
+	 * visita in profondità
+	 */
 	@Override
 	public Graph<V, E> depthFirst(Graph<V, E> graph, V s, VertexAnalyser<V> va) {
 		ArrayList<V> vertex = graph.vertices();

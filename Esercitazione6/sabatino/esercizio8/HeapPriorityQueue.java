@@ -27,11 +27,12 @@ public class HeapPriorityQueue implements PriorityQueueString {
 	
 	/**
 	 * Costruttore della coda con priorità
+	 * heap : array di elemConPrio, di lunghezza n+1;
+	 *indiceUltimo : posizione dell'ultimo elemento, con priorità massima, inizializzato a 0.
+	 *position : tabella di hash che associa ad una stringa un valore Integer,
+	 *ovvero l'indice dell'elemento nell'array heap
 	 *@param n : grandezza della coda -1
-	 *@param heap : array di elemConPrio, di lunghezza n+1;
-	 *@param indiceUltimo : posizione dell'ultimo elemento, con priorità massima
-	 *@param position : tabella di hash che associa ad una stringa({@link ElemConPrior.element} un valore Integer, ovvero l'indice dell'elemento nell'array heap 
-	 * */
+	 */
 	public HeapPriorityQueue(int n){
 		heap = new ElemConPrior[n+1];
 		indiceUltimo = 0;
@@ -39,15 +40,17 @@ public class HeapPriorityQueue implements PriorityQueueString {
 	}
 	
 	/**
-	 * funzione di moveUp, che in caso di elemento fuori posto lo fa salire in alto fino al posto giusto
+	 * funzione di moveUp, che in caso di elemento fuori posto rispetto al genitore(priorità minore del genitore),
+	 * lo fa risalire fino al posto giusto.
+	 * 
 	 * @param i : indice dell'elemento dello heap da portare verso l'alto
+	 * @exception IllegalArgumentException se l'indice fornito in input è maggiore dell'indice dell'ultimo elemento, solleva un eccezione IllegalArgumentException. 
 	 * */
 	private void moveUp(int i){
 		if(i >= indiceUltimo) throw new IllegalArgumentException();
 		ElemConPrior ep = heap[i];
 		while(i>0){
-			if(ep.priority>=heap[(i-1)/2].priority)//lo fa in caso la priorità dell'elemnto è più grande di quella del padre
-				break;
+			if(ep.priority>=heap[(i-1)/2].priority)break;
 			heap[i] = heap[(i-1)/2];
 			position.put(heap[i].element, i);
 			i=(i-1)/2;
@@ -55,12 +58,18 @@ public class HeapPriorityQueue implements PriorityQueueString {
 		heap[i]=ep;
 		position.put(heap[i].element,i);
 	}
-	
+	/**
+	 * procedura di moveDown o fixHeap
+	 * se i è l'indice di un elemento fuori posto rispetto ai figli(priorità maggiore di almeno uno dei figli),
+	 * lo fa scendere al posto giusto, scambiandolo ogni volta con il figlio di priorità minore.
+	 * @param i int è l'indice del posto vuoto
+	 * @exception IllegalArgumentException se l'indice fornito in input è maggiore dell'indice dell'ultimo elemento, solleva un eccezione IllegalArgumentException.
+	 */
 	private void moveDown(int i){
 		if(i > indiceUltimo) throw new IllegalArgumentException();
 			ElemConPrior el = heap[i];
 			int j;
-			while((j=(2*i)+1)<=indiceUltimo){
+			while((j=(2*i)+1)<indiceUltimo){
 				if(j+1<=indiceUltimo && heap[j+1].priority<heap[j].priority) 
 					j++;
 				if(el.priority<=heap[j].priority) break;
@@ -71,16 +80,26 @@ public class HeapPriorityQueue implements PriorityQueueString {
 			position.put(heap[i].element, i);
 	}
 	
-	@Override
+	/**
+	 * metodo che testa se lo heap ha elementi oppure no,
+	 * va a controllare se la variabile indiceUltimo è uguale a 0, 
+	 * in caso contrario vuol dire che ci sono elementi e lo heap non è vuoto  
+	 * @return boolean true: se non ci sono elementi e quindi la coda è vuota, false: se ci sono elementi quindi la coda non è vuota. 
+	 */
 	public boolean isEmpty() {
 		if(indiceUltimo==0)return true;
 		return false;
 	}
 
-	@Override
+	/** viene aggiunto un nodo alla fine dello heap(viene creata una nuova foglia) in un posto vuoto,
+	 * se l'elemento da inserire ha priorità minore del genitore del posto vuoto lo si fa risalire
+	 * attraverso la moveUp fino al posto giusto.
+	 * nel caso in cui la coda fosse piena, ne rialloca una nuova di dimensione doppia, ricopiando il contenuto di quella vecchia.
+	 * @param element String elemento da inserire all'interno dello heap.
+	 * @param priority double priorità dell'elemento da inserire.
+	 */
 	public void insert(String element, double priority) {
 		if(indiceUltimo==heap.length) rialloca();
-		
 		if(!position.containsKey(element)){	
 			heap[indiceUltimo] = new ElemConPrior(element,priority);
 			position.put(element, indiceUltimo);
@@ -89,15 +108,23 @@ public class HeapPriorityQueue implements PriorityQueueString {
 			
 		}
 	}
-
-	public void rialloca(){
+/**
+ * metodo ausiliario che rialloca la coda di dimensione doppia in caso di coda del tutto piena(indiceUltimo == heap.length).
+ */
+	private void rialloca(){
 		ElemConPrior[] nuovo = new ElemConPrior[(heap.length*2)+1]; 
 		for(int i = 0;i<heap.length;i++)
 			nuovo[i]=heap[i];
 		heap = nuovo;
 	}
 	
-	@Override
+	/**estrazione dell'elemento con priorità più alta(ovvero l'elemento con priorità minima),
+	 * si estrae la radice, si toglie l'ultimo nodo e lo si mette al posto della radice, 
+	 * quasi sicuramente sarà di priorità maggiore di uno dei suoi figli(fuori posto)
+	 * e allora si farà scendere al posto giusto per mezzo della moveDown.
+	 * @return String elemento che ha priorità più alta
+	 * @exception IllegalArgumentException in caso di coda vuota, la procedura solleva un eccezione.
+	 */
 	public String extractfirst() {
 		if(indiceUltimo==0) throw new IllegalArgumentException();
 		String first = heap[0].element;
@@ -112,50 +139,65 @@ public class HeapPriorityQueue implements PriorityQueueString {
 		return first;
 	}
 
-	@Override
+	/**
+	 * ritorna l'elemento con priorità con priorità più alta senza però estrarlo
+	 * @exception in caso di coda vuota, la procedura solleva un eccezione.
+	 * @return String elemento che ha la priorità più alta (ovvero la radice dello heap).
+	 */
 	public String getFirst() {
+		if(indiceUltimo==0) throw new IllegalArgumentException();
 		return heap[0].element;
 	}
 
-	@Override
+	/**
+	 * metodo che imposta a newPriority la priorità dell'elemento element
+	 * occorre trovare in tempo costante l'elemento element, e per questo motivo abbiamo usato una tabella di hash. 
+	 * una volta ottenuta la posizione, andiamo a controllare se la nuova priorità è maggiore della priorità precedente,
+	 * in tal caso è un operazione illecita (dobbiamo rispettare l'invariante di implementazione),
+	 * altrimenti si modifica la priorità e lo si riposiziona nel posto giusto prima provano a farlo salire con una moveUp
+	 * e poi facendolo scendere con una moveDown.
+	 * @param element String elemento che si vuole andare a modificare la priorità.
+	 * @param newPriority double valore della nuova priorità che si vuole impostare all'elemento (deve essere inferiore alla vecchia priorità)
+	 * @return restituisce un valore booleano indicante la buona riuscita o meno dell'operazione di variazione di priorità.
+	 * @exception IllegalArgumentException in caso di un elemento non appartenente alla coda, la procedura solleva un eccezione.
+	 */
 	public boolean decreasePriority(String element, double newPriority) {
 		if(position.get(element)!=null){
 			int i = position.get(element);
-			if(i>indiceUltimo || i<0) throw new IllegalArgumentException();
-			if(heap[i].priority<newPriority) return false;
+			decreasePriority(i, newPriority);
+		}return false;
+	}
+	private boolean decreasePriority(int i, double newPriority){
+		if(i>indiceUltimo) throw new IllegalArgumentException();
+		if(heap[i].priority>newPriority){
 			heap[i].priority = newPriority;
 			moveDown(i);
 			moveUp(i);
 			return true;
-		}
-		return false;
+		} return false;
 	}
 
-	@Override
+	/**
+	 * procedura che rimuove un elemento dalla coda
+	 * la procedura ricerca nella coda l'elemento attraverso una tabella di hash,
+	 * se lo trova lo sovrascrive con l'ultima foglia e poi la fa scendere al posto giusto attraverso la moveDown
+	 * @param element String elemnto che si vuole rimuovere dalla coda
+	 * @exception IllegalArgumentException se l'elemento in input non appartiene alla coda, oppure la coda è vuota, la procedura solleva un eccezione.
+	 */
 	public void remove(String element) {
 		if(indiceUltimo<=0) throw new IllegalArgumentException();
 		int i= position.get(element);
+		if(i>indiceUltimo || i<0) throw new IllegalArgumentException();// da controllare
 		heap[i] = heap[indiceUltimo-1];
 		indiceUltimo=indiceUltimo-1;
 		moveDown(i);
 	}
-	
-	public void printHeap(){
-		for(int i = 0;i<indiceUltimo;i++){
-			position.toString();
-			//System.out.println("Elemento: "+heap[i].element+" , Priorità: "+heap[i].priority+" indice nell'hash: "+position.get(heap[i].element));
-		}
-	}
-	public void printHash(){
-		for(int i = 0;i<indiceUltimo;i++)
-			System.out.println("hash: "+position.get(heap[i].element)+"elemnto: "+heap[position.get(heap[i].element)].element);
+	/**
+	 * metodo che indica il numero degli elementi all'interno della coda con priorità.
+	 * @return indiceUltimo indice dell'ultimo elemento insierito nella coda che indica anche la quantità di elememti presenti.
+	 */
+	public int size(){
+		return indiceUltimo;
 	}
 	
-	public void printInTree(){
-		for(int i = 0; i<indiceUltimo;i++){
-			System.out.println("padre: "+heap[(i-1)/2].element);
-			System.out.println("figlio sinistro: "+heap[(2*i)+1].element+" di padre: "+heap[(i-1)/2].element);
-			System.out.println("figlio destro: "+heap[(2*i)+2].element+" di padre: "+heap[(i-1)/2].element);
-		}
-	}
 }

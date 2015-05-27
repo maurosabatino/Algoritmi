@@ -1,26 +1,19 @@
 package sabatino.esercizio7;
 
-import static java.lang.System.nanoTime;
-
 import java.io.*;
-
-import sabatino.testVari.RandomArrays;
-
 
 public class FastSortingTest {
 	private static PrintWriter out;
 	
 	 static Cronometro c = new Cronometro();
-  static final int N = 2000001, STEP = 50000;
+  static final int N = 9999999, STEP = 5000;
   static int[] array;
 	 private static enum Algorithm{
 		 MergeSortWithSingleAuxiliaryArray,
 		 MergeSortNoMergeOnSorted,
 		 MergeSortJavaAPIVersion, 	
 		 QuickSortMidToExamine, 	
-		 QuickSortHoare,
-		 //QuickSortHoareWithInsSort,
-		 //QuickSortHoareTailRecursionElimination,	
+		 QuickSortHoare,	
 		 QuickSortCrescenzi
 	 }
 	public static void main(String[] args) throws IOException {

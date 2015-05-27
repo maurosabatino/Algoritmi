@@ -2,22 +2,29 @@ package sabatino.esercizio7;
 
 import java.util.Random;
 
-/*
- 	ok		MergeSortWithSingleAuxiliaryArray (slide 19.51)
-	TODO	MergeSortNoMergeOnSorted (slide 19.55)
-	TODO 	test	MergeSortJavaAPIVersion (slide 19.58) 	
-	ok		QuickSortMidToExamine (slide 20.79) 	
-	TODO	QuickSortHoare (slide 21) 
-	TODO	QuickSortHoareWithInsSort (slide 20.98)
- 	TODO	QuickSortHoareTailRecursionElimination (slide 20.100)	
- 	ok		QuickSortCrescenzi (slide 21.43)
+/**
+ * classe che implementa diverse varianti del quicksort e del mergesort:
+ * - MergeSortWithSingleAuxiliaryArray
+ * - MergeSortNoMergeOnSorted
+ * - MergeSortJavaAPIVersion
+ * - QuickSortMidToExamine
+ * - QuickSortHoare
+ * - QuickSortCrescenzi
+ * 
+ * @author Mauro
+ *
  */
-
 public class FastSorting {
 	
 	private static Random generatore = new Random();
 	
-	/**merge sort ecologico*/
+	/**
+	 * mergesort ecologico
+	 * questa variante del mergesort, non va a creare ad ogni chiamata della merge l'array ausiliario, ma lo crea direttamente all'inizio della procedura.
+	 * in questo modo non si intasa ulteriormente il garbage collector di java.
+	 * bisogna modificare anche ad hoc la procedura di merge in quanto ora le porzioni da fondere non è più a[0...last-first] ma sono a[first...mid] e a[mid+1...last]
+	 * @param a arrat di interi che si vuole ordinare.
+	 */
 
 	public static void 	MergeSortWithSingleAuxiliaryArray(int[]a){
 		int n = a.length;
@@ -33,15 +40,32 @@ public class FastSorting {
 		}
 	}
 	
+	/**
+	 * Procedura di merge del mergesort ecologico
+	 * @param a porzione di array su cui andare ad eseguire la procedura di merge
+	 * @param fst indice iniziale della porzione da fondere
+	 * @param mid indice dell'elemento centrale 
+	 * @param lst
+	 * @param c array ausiliario su cui la procedura si "appoggia" per andare ad inserire gli elementi in ordine
+	 */
 	private static void 	MergeWithSingleAuxiliaryArray(int[]a,int fst,int mid,int lst,int[]c){
 	int i=fst,j=mid+1,k=fst;
 	while(i<=mid && j<=lst){
 		if(a[i]<=a[j]) c[k++]=a[i++];
 		else c[k++]=a[j++];
 	}
-	for(int h= mid,l=lst;h>=i;) a[l--]=a[h--];
+	int h = mid,l = lst;
+	while(h >= i) a[l--] = a[h--];
 	for(int r = fst;r<k;r++) a[r]=c[r];
 }
+	
+	
+	
+	/**
+	 * ottimizzazione che consiste nel controllare prima di effettuare l afusione se l'ultimo elemento del segmento sinistro è<= del primo elemento del segmento destro, 
+	 * in questo caso è una sequenza già ordinata e non è necessaria la fusione.
+	 * @param a array di interi che si vuole ordinare.
+	 */
 	public static void 	MergeSortNoMergeOnSorted(int[]a){
 		int n = a.length;
 		int[]aux = new int[n];
@@ -66,7 +90,11 @@ public class FastSorting {
 	for(int r = fst;r<k;r++) a[r]=c[r];
 }
 	
-/**merge sort a passo alternato*/
+/**merge sort a passo alternato o versione delle api java
+ * evito di copiare tutte le volte l'array di partenza in quello ausiliario, 
+ * perciò all'inizio copio tutto l'array di input a in un array ausiliario e nelle chiamate ricorsive lo uso come se fosse la'rray di input. e alla fine l'array di input risulterà ordinato
+ * @param a array di interi che si vuole ordinare. 
+ * */
 	public static void MergeSortJavaAPIVersion(int[]a){
 		int n = a.length;
 		int[]aux = a;
@@ -94,7 +122,8 @@ public class FastSorting {
 
 	
 	
-	/** quicksort base con bandiera*/
+	/** quicksort base con bandiera
+	 * algoito che implementa il quick sort in cui tiene la parte da esaminare in mezzo*/
 	public static void QuickSortMidToExamine(int[]a){
 		if (a ==null || a.length==0)
       return;
@@ -102,21 +131,22 @@ public class FastSorting {
 		QuickSortMidToExamine(a,0,n-1);
 	}
 	private static void QuickSortMidToExamine(int[]a,int inf, int sup){
-		if(inf>=sup) return;
-		int p = QuickSortMidToExaminePartition(a,inf,sup);
-		QuickSortMidToExamine(a,inf,p-1);
-		QuickSortMidToExamine(a,p+1,sup);
-	}
-	private static int QuickSortMidToExaminePartition(int[]a,int inf, int sup){
-		int pivot = a[inf];
-		int i = inf+1;
-		int j = sup;
-		while(i<=j){
-			if(a[i]<pivot)	i++;
-			else swap(a,i,j--);
+		if(inf<sup){
+			int pivot = a[inf];
+			int i = inf+1;
+			int j = sup;
+			while(i<=j){
+				if(a[i]>pivot){
+					swap(a,i,j);
+					j--;
+				}
+				else i++;
+		
+			}
+			swap(a,inf,j);
+			QuickSortMidToExamine(a,inf,j-1);
+			QuickSortMidToExamine(a,j+1,sup);
 		}
-		swap(a,inf,j);
-		return j ;	
 	}
 
 	
@@ -175,10 +205,17 @@ public class FastSorting {
 	
 	
 	
-	/**procedura di swap*/
+	/**
+	 * 
+	 * @param a
+	 * @param i
+	 * @param j
+	 */
 	public static void swap(int[]a,int i,int j){
 		int temp=a[i];
 		a[i]=a[j];
 		a[j]=temp;
 	}
+	
+
 }//

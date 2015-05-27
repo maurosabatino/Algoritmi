@@ -4,12 +4,12 @@ package sabatino.esercizio9;
 
 public class HeapSortTest {
 	public static void main(String[]args){
-		Cronometro c = new Cronometro();
-		int[] array = RandomArrays.randomIntArray(20000000);
-		c.start();
+		//int[] array = RandomArrays.randomIntArray(6);
+		int[] array = {2,6,4,7,3,5};
+		Cronometro.start();
 		HeapSort.hSort(array);
-		c.stop();
-		System.out.println("lunghezza: "+array.length+" tempo: "+c.getElapsedTime()+" ordinato: "+ordinato(array,array.length));
+		Cronometro.stop();
+		System.out.println("lunghezza: "+array.length+" tempo: "+Cronometro.getElapsedTime()+" ordinato: "+ordinato(array,array.length));
 	}
 	
 	static boolean ordinato(int a[],int n) {

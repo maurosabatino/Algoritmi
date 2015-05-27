@@ -13,18 +13,19 @@ public class HeapPriorityQueueTest {
 		heap.insert("otto",8);
 		heap.insert("cinque",5);
 		heap.insert("sette",7);
+	
+		System.out.println("ho estratto: "+heap.extractfirst());
+		System.out.println("ho estratto: "+heap.extractfirst());
+		System.out.println("ho estratto: "+heap.extractfirst());
+		System.out.println("ho estratto: "+heap.extractfirst());
+		System.out.println("ho estratto: "+heap.extractfirst());
+		System.out.println("ho estratto: "+heap.extractfirst());
+		System.out.println("ho estratto: "+heap.extractfirst());
+		System.out.println("ho estratto: "+heap.extractfirst());
 		
-
+		heap.insert("uno",10);
 		System.out.println(heap.extractfirst());
-		System.out.println(heap.extractfirst());
-		System.out.println(heap.extractfirst());
-		System.out.println(heap.extractfirst());
-		System.out.println(heap.extractfirst());
-		System.out.println(heap.extractfirst());
-		System.out.println(heap.extractfirst());
-		System.out.println(heap.extractfirst());
-		
-		heap.insert("uno",1);
+		heap.decreasePriority("uno", -20);
 		heap.insert("due",2);
 		heap.insert("tre",3);
 		heap.insert("sei",6);
@@ -33,11 +34,10 @@ public class HeapPriorityQueueTest {
 		heap.insert("cinque",5);
 		heap.insert("meno sette",-7);
 		heap.insert("zero", 0);
-		heap.decreasePriority("otto", 3.8);
+		heap.decreasePriority("cinque", 3);
 		heap.remove("sei");
 		System.out.println("primo elemento "+heap.getFirst());
 		System.out.println(heap.isEmpty());
-		System.out.println(heap.extractfirst());
 		System.out.println(heap.extractfirst());
 		System.out.println(heap.extractfirst());
 		System.out.println(heap.extractfirst());

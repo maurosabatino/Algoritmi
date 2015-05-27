@@ -21,15 +21,19 @@ public class Test {
 		grafo.addEdge(3, 9, "3->9");
 		grafo.addEdge(11, 9, "11->9");
 		
-		//grafo.printNeighbors(4);
+		grafo.printNeighbors(4);
 		//grafo.printNeighbors(3);
 		//grafo.printNeighbors(5);
 		//System.out.println("numero nodi: "+grafo.n);
 		//System.out.println("numero arch: "+grafo.m);
-		grafo.ToDot("grafo");
+		grafo.toDot("grafo");
 		
 		GraphVisitImplements<Integer, String> gv = new GraphVisitImplements<Integer, String>();
 		VertexAnalyserImplements<Integer> va = new VertexAnalyserImplements<Integer>();
+		System.out.println("visita in profondità");
 		gv.depthFirst(grafo, 4, va);
+		System.out.println("visita in ampiezza");
+		gv.breadthFirst(grafo, 4, va);
+		
 	}
 }
